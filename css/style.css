@@ -1,0 +1,9 @@
+.racer_table td {
+    border-right: 1px solid gray;
+    background-color: rgba(52, 152, 219,.20);
+    height: 25px;
+    width: 25px;
+}
+.racer_table td.active {
+    background-color: rgba(142, 68, 173,.80);
+}
