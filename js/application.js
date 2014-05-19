@@ -4,16 +4,19 @@ function update_player_position(playerNumber, trackPosition) {
 }
 
 $(document).ready(function(){
+        var player1counter = 2;
+        var player2counter = 2;
 
     $(document).keyup(function(e) {
         var code = e.keyCode || e.which;
         if (code == 80) { //Enter keycode
-           console.log("move player 1")
+           player1counter
+           update_player_position(1, player1counter);
+           player1counter++;
          } else if (code == 81 ) {
-            console.log("move player 2")
-         }
+            console.log(player2counter)
+            update_player_position(2, player2counter);
+            player2counter++;
+         }// end of if else if
     }); // end of keyup
-    // update_player_position(1,5);
-    // update_player_position(2,5);
-
 }); // end of doc ready
