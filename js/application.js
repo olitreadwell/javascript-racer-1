@@ -34,16 +34,12 @@ $(document).ready(function(){
             if (player1counter  == 12) {
                     console.log(player1counter);
                     $(".racer_table").after("<span id='startingPosition'>Player 1 Wins!</span>");
-                    $(document ).unbind( "keyup", function() {
-                          alert( "unbinds?." );
-                    });
+                    $(document).unbind("keyup");
              }
              if (player2counter  == 12) {
                     console.log(player1counter);
                     $(".racer_table").after("<span id='startingPosition'>Player 2 Wins!</span>");
-                    $(document ).unbind( "keyup", function() {
-                          alert( "unbinds?" );
-                    });
+                    $(document).unbind( "keyup");
              }
     }); // end of keyup
 
