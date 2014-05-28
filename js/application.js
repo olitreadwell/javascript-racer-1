@@ -1,50 +1,59 @@
-function update_player_position(playerNumber, trackPosition) {
-    $("#player" + playerNumber + "track td").removeClass("active");
-    $("#player" + playerNumber + "track :nth-child(" + trackPosition + ")").addClass("active");
+function winningScenario(playerCounter, playerNumber){
+    var finishLine = ($("td").size()/2)
+    var raceTrack = $(".racer_table")
+    if (playerCounter  == finishLine) {
+            console.log(playerCounter);
+            raceTrack.after("<span id='startingPosition'>Player " + playerNumber + " Wins!</span>");
+            $(document).unbind("keyup");
+     }
+}
+
+function Player (trackNumber, keyCode) {
+    this.trackNumber= trackNumber;
+    this.code = keyCode;
+    this.position = 1;
+}
+
+Player.prototype.advancePlayer = function(){
+    this.position++;
+}
+
+Player.prototype.updatePlayerPosition = function(){
+    $("#player" + this.trackNumber + "track td").removeClass("active");
+    $("#player" + this.trackNumber + "track :nth-child(" + this.position + ")").addClass("active");
 }
 
 $(document).ready(function(){
-    var player1counter = 1;
-    var player2counter = 1;
+    var player1 = new Player(1, 80);
+    var player2 = new Player(2, 81);
+    var raceTrack = $(".racer_table");
+    var players = [ player1, player2 ];
 
-//bind player keys & movement
     $(document).keyup(function(e) {
-        var code = e.keyCode || e.which;
-        if (code == 80) { //Enter keycode
-           // console.log(player1counter);
-           player1counter++;
-           update_player_position(1, player1counter);
-         } else if (code == 81 ) {
-            // console.log(player2counter);
-            player2counter++;
-            update_player_position(2, player2counter);
-         }// end of if else if
+        var keyCode = e.keyCode || e.which;
+        for (var i  = 0; i < players.length; i ++) {
+            if (players[i].code == keyCode) {
+                console.log("player" + players[i].trackNumber + " is currently at position " + players[i].position)
+                players[i].advancePlayer();
+                players[i].updatePlayerPosition();
+            }
+        }
 
             //starting position
-                    if (player1counter + player2counter == 2) {
+                    if (player1.position + player2.position == 2) {
                         console.log("starting position");
-                        $(".racer_table").after("<span id='startingPosition'>Start your engines!</span>");
+                        raceTrack.after("<span id='startingPosition'>Start your engines!</span>");
                     }
-                    if (player1counter + player2counter > 2) {
-                        console.log(player1counter + player2counter);
+                    if (player1.position + player2.position > 2) {
+                        console.log(player1.position + player2.position);
                         $("span").hide();
                     }
 
             // ending position
-            if (player1counter  == 12) {
-                    console.log(player1counter);
-                    $(".racer_table").after("<span id='startingPosition'>Player 1 Wins!</span>");
-                    $(document).unbind("keyup");
-             }
-             if (player2counter  == 12) {
-                    console.log(player1counter);
-                    $(".racer_table").after("<span id='startingPosition'>Player 2 Wins!</span>");
-                    $(document).unbind( "keyup");
-             }
+            winningScenario(player1.position, player1.trackNumber);
+            winningScenario(player2.position, player2.trackNumber);
     }); // end of keyup
-
-
-
-
-
 }); // end of doc ready
+
+
+
